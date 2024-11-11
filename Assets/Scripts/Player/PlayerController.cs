@@ -8,16 +8,28 @@ public class PlayerController : MonoBehaviour
 
     public float moveSpeed;
 
-    // Start is called before the first frame update
+    private Shooter shooter;
+
+    private Animator anim;
+
     void Start()
     {
-        if (!TryGetComponent<Rigidbody2D>(out rb_self))
+        if (!TryGetComponent(out rb_self))
         {
             Debug.LogWarning("Rigid Body 2D not found!");
         }
+
+        if (!transform.GetChild(0).GetChild(1).TryGetComponent(out shooter))
+        {
+            Debug.LogWarning("Shooter not found!");
+        }
+
+        if (!TryGetComponent(out anim))
+        {
+            Debug.LogWarning("Animator not found!");
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         inputX = 0;
@@ -40,10 +52,19 @@ public class PlayerController : MonoBehaviour
             inputX += 1;
         }
 
-        Vector2 AttackVector = (Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, -Camera.main.transform.position.z)) - gameObject.transform.position);
-        float Angle = Angle_360(AttackVector);
+        Vector2 AttackVector = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, -Camera.main.transform.position.z)) - gameObject.transform.position;
+        transform.GetChild(0).rotation = Quaternion.Euler(0, 0, (float)Angle_360(AttackVector));
 
-        transform.GetChild(0).rotation = Quaternion.Euler(0, 0, Angle);
+        if (Input.GetMouseButtonDown(0))
+        {
+            shooter.OnShoot();
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            transform.GetChild(1).rotation = transform.GetChild(0).rotation;
+            anim.Play("MeleeAtk");
+        }
     }
 
     private void FixedUpdate()
@@ -51,7 +72,7 @@ public class PlayerController : MonoBehaviour
         rb_self.velocity = new Vector2(inputX, inputY).normalized * moveSpeed;
     }
 
-    public float Angle_360(Vector2 Vector)
+    private float Angle_360(Vector2 Vector)
     {
         float x = Vector.x;
         float y = Vector.y;
