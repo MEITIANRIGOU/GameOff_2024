@@ -18,7 +18,7 @@ public class ShadowCam : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         cam = Camera.main;
-        cam.aspect = 4f / 3f;
+        cam.aspect = 16f / 9f;
         camHeight = 2 * cam.orthographicSize;
         camWidth = camHeight * cam.aspect;
        // Darkness.settings.SetDarkness(0.25f);
