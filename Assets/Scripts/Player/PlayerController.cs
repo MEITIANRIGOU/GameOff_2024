@@ -12,6 +12,10 @@ public class PlayerController : MonoBehaviour
 
     private Animator anim;
 
+    bool key_flashlight = false;
+
+   [SerializeField] SpriteRenderer flashlight;
+
     void Start()
     {
         if (!TryGetComponent(out rb_self))
@@ -64,6 +68,12 @@ public class PlayerController : MonoBehaviour
         {
             transform.GetChild(1).rotation = transform.GetChild(0).rotation;
             anim.Play("MeleeAtk");
+        }
+
+        key_flashlight = Input.GetKeyDown(KeyCode.F);
+        if (key_flashlight)
+        {
+            flashlight.enabled = !flashlight.enabled;
         }
     }
 

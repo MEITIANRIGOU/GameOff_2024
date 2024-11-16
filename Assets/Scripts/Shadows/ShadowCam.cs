@@ -18,6 +18,7 @@ public class ShadowCam : MonoBehaviour
         cam.aspect = 4f / 3f;
         camHeight = 2 * cam.orthographicSize;
         camWidth = camHeight * cam.aspect;
+       // Darkness.settings.SetDarkness(0.25f);
     }
    
 
