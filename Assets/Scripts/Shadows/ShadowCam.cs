@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class ShadowCam : MonoBehaviour
 {
+    public Tilemap tilemapShadowCaster;
+
     float camHeight, camWidth;
     Camera cam;
     [SerializeField] Material GLdraw;
@@ -39,49 +42,52 @@ public class ShadowCam : MonoBehaviour
 
     private void OnPostRender()
     {
-          
-            float cameraLeft = transform.position.x - camWidth / 2;
-            float cameraBottom = transform.position.y - camHeight / 2;
+        float cameraLeft = transform.position.x - cam.orthographicSize * cam.aspect;
+        float cameraBottom = transform.position.y - cam.orthographicSize;
 
-            GL.PushMatrix();
-            GLdraw.SetPass(0);
-            GL.LoadOrtho();
+        GL.PushMatrix();
+        GLdraw.SetPass(0);
+        GL.LoadOrtho();
 
-            Collider2D[] collisions = Physics2D.OverlapBoxAll(transform.position, new Vector2(camWidth, camHeight), 0, LayerMask.GetMask("Wall"));
-            foreach (Collider2D collision in collisions)
+        BoundsInt bounds = tilemapShadowCaster.cellBounds;
+
+        foreach (Vector3Int pos in bounds.allPositionsWithin)
+        {
+            if (tilemapShadowCaster.HasTile(pos))
             {
-                WallShadow wall = collision.GetComponent<WallShadow>();
-                float left = (wall.left - cameraLeft) / camWidth;
-                float top = (wall.top - cameraBottom) / camHeight;
-                float right = (wall.right - cameraLeft) / camWidth;
-                float bottom = (wall.bottom - cameraBottom) / camHeight;
+                Vector3 cellWorldPos = tilemapShadowCaster.CellToWorld(pos);
+
+                float left = (cellWorldPos.x - cameraLeft) / (cam.orthographicSize * 2 * cam.aspect);
+                float right = (cellWorldPos.x + tilemapShadowCaster.cellSize.x - cameraLeft) / (cam.orthographicSize * 2 * cam.aspect);
+                float bottom = (cellWorldPos.y - cameraBottom) / (cam.orthographicSize * 2);
+                float top = (cellWorldPos.y + tilemapShadowCaster.cellSize.y - cameraBottom) / (cam.orthographicSize * 2);
 
                 // Debug visual lines for the shadow bounds
-                Debug.DrawLine(new Vector3(wall.left, wall.bottom, 0), new Vector3(wall.right, wall.bottom, 0), Color.red);
-                Debug.DrawLine(new Vector3(wall.right, wall.bottom, 0), new Vector3(wall.right, wall.top, 0), Color.red);
-                Debug.DrawLine(new Vector3(wall.right, wall.top, 0), new Vector3(wall.left, wall.top, 0), Color.red);
-                Debug.DrawLine(new Vector3(wall.left, wall.top, 0), new Vector3(wall.left, wall.bottom, 0), Color.red);
+                Debug.DrawLine(new Vector3(cellWorldPos.x, cellWorldPos.y, 0), new Vector3(cellWorldPos.x + tilemapShadowCaster.cellSize.x, cellWorldPos.y, 0), Color.red);
+                Debug.DrawLine(new Vector3(cellWorldPos.x + tilemapShadowCaster.cellSize.x, cellWorldPos.y, 0), new Vector3(cellWorldPos.x + tilemapShadowCaster.cellSize.x, cellWorldPos.y + tilemapShadowCaster.cellSize.y, 0), Color.red);
+                Debug.DrawLine(new Vector3(cellWorldPos.x + tilemapShadowCaster.cellSize.x, cellWorldPos.y + tilemapShadowCaster.cellSize.y, 0), new Vector3(cellWorldPos.x, cellWorldPos.y + tilemapShadowCaster.cellSize.y, 0), Color.red);
+                Debug.DrawLine(new Vector3(cellWorldPos.x, cellWorldPos.y + tilemapShadowCaster.cellSize.y, 0), new Vector3(cellWorldPos.x, cellWorldPos.y, 0), Color.red);
 
                 // Shadow rendering logic
-                if (player.transform.position.x <= wall.centerX && player.transform.position.y <= wall.centerY)
+                if (player.transform.position.x <= cellWorldPos.x && player.transform.position.y <= cellWorldPos.y)
                     DrawShadow(left, bottom, right, top);
-                if (player.transform.position.x <= wall.centerX && player.transform.position.y >= wall.centerY)
+                if (player.transform.position.x <= cellWorldPos.x && player.transform.position.y >= cellWorldPos.y)
                     DrawShadow(left, top, right, bottom);
-                if (player.transform.position.x >= wall.centerX && player.transform.position.y >= wall.centerY)
+                if (player.transform.position.x >= cellWorldPos.x && player.transform.position.y >= cellWorldPos.y)
                     DrawShadow(right, top, left, bottom);
-                if (player.transform.position.x >= wall.centerX && player.transform.position.y <= wall.centerY)
+                if (player.transform.position.x >= cellWorldPos.x && player.transform.position.y <= cellWorldPos.y)
                     DrawShadow(right, bottom, left, top);
             }
+        }
 
-            GL.PopMatrix();
-        
+        GL.PopMatrix();
     }
 
 
     void DrawShadow(float x1, float y1, float x2, float y2)
     {
         // Use player's normalized position for projection origin
-        Vector3 playerPos = Camera.main.WorldToScreenPoint(player.transform.position);
+        Vector3 playerPos = cam.WorldToScreenPoint(player.transform.position);
         float x = playerPos.x / Screen.width;
         float y = playerPos.y / Screen.height;
 
