@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
 
    [SerializeField] SpriteRenderer flashlight;
 
+ 
     void Start()
     {
         if (!TryGetComponent(out rb_self))
