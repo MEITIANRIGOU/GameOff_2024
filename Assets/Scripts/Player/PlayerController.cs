@@ -71,11 +71,13 @@ public class PlayerController : MonoBehaviour
             anim.Play("MeleeAtk");
         }
 
+        /*
         key_flashlight = Input.GetKeyDown(KeyCode.F);
         if (key_flashlight)
         {
             flashlight.enabled = !flashlight.enabled;
         }
+        */
     }
 
     private void FixedUpdate()

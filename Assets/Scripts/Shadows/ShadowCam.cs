@@ -6,7 +6,9 @@ using UnityEngine.Tilemaps;
 
 public class ShadowCam : MonoBehaviour
 {
-    public Tilemap tilemapShadowCaster;
+    public List<Tilemap> tilemapShadowCasters;
+  
+    public Tilemap secretRoomTilemap;
 
     float camHeight, camWidth;
     Camera cam;
@@ -21,14 +23,14 @@ public class ShadowCam : MonoBehaviour
         cam.aspect = 16f / 9f;
         camHeight = 2 * cam.orthographicSize;
         camWidth = camHeight * cam.aspect;
-       // Darkness.settings.SetDarkness(0.25f);
+        // Darkness.settings.SetDarkness(0.25f);
     }
-   
+
 
     void LateUpdate()
     {
         Vector3 playerPosition = player.transform.position;
-        playerPosition.z = transform.position.z; // Maintain camera's Z position
+        playerPosition.z = transform.position.z;
         transform.position = playerPosition;
 
         // Debug camera alignment
@@ -49,34 +51,44 @@ public class ShadowCam : MonoBehaviour
         GLdraw.SetPass(0);
         GL.LoadOrtho();
 
-        BoundsInt bounds = tilemapShadowCaster.cellBounds;
-
-        foreach (Vector3Int pos in bounds.allPositionsWithin)
+        foreach (Tilemap tilemapShadowCaster in tilemapShadowCasters)
         {
-            if (tilemapShadowCaster.HasTile(pos))
+
+            // Skip rendering if secretRoomTilemap is inactive
+            if (tilemapShadowCaster == secretRoomTilemap && !secretRoomTilemap.gameObject.activeSelf)
             {
-                Vector3 cellWorldPos = tilemapShadowCaster.CellToWorld(pos);
+                continue; 
+            }
 
-                float left = (cellWorldPos.x - cameraLeft) / (cam.orthographicSize * 2 * cam.aspect);
-                float right = (cellWorldPos.x + tilemapShadowCaster.cellSize.x - cameraLeft) / (cam.orthographicSize * 2 * cam.aspect);
-                float bottom = (cellWorldPos.y - cameraBottom) / (cam.orthographicSize * 2);
-                float top = (cellWorldPos.y + tilemapShadowCaster.cellSize.y - cameraBottom) / (cam.orthographicSize * 2);
+            BoundsInt bounds = tilemapShadowCaster.cellBounds;
 
-                // Debug visual lines for the shadow bounds
-                Debug.DrawLine(new Vector3(cellWorldPos.x, cellWorldPos.y, 0), new Vector3(cellWorldPos.x + tilemapShadowCaster.cellSize.x, cellWorldPos.y, 0), Color.red);
-                Debug.DrawLine(new Vector3(cellWorldPos.x + tilemapShadowCaster.cellSize.x, cellWorldPos.y, 0), new Vector3(cellWorldPos.x + tilemapShadowCaster.cellSize.x, cellWorldPos.y + tilemapShadowCaster.cellSize.y, 0), Color.red);
-                Debug.DrawLine(new Vector3(cellWorldPos.x + tilemapShadowCaster.cellSize.x, cellWorldPos.y + tilemapShadowCaster.cellSize.y, 0), new Vector3(cellWorldPos.x, cellWorldPos.y + tilemapShadowCaster.cellSize.y, 0), Color.red);
-                Debug.DrawLine(new Vector3(cellWorldPos.x, cellWorldPos.y + tilemapShadowCaster.cellSize.y, 0), new Vector3(cellWorldPos.x, cellWorldPos.y, 0), Color.red);
+            foreach (Vector3Int pos in bounds.allPositionsWithin)
+            {
+                if (tilemapShadowCaster.HasTile(pos))
+                {
+                    Vector3 cellWorldPos = tilemapShadowCaster.CellToWorld(pos);
 
-                // Shadow rendering logic
-                if (player.transform.position.x <= cellWorldPos.x && player.transform.position.y <= cellWorldPos.y)
-                    DrawShadow(left, bottom, right, top);
-                if (player.transform.position.x <= cellWorldPos.x && player.transform.position.y >= cellWorldPos.y)
-                    DrawShadow(left, top, right, bottom);
-                if (player.transform.position.x >= cellWorldPos.x && player.transform.position.y >= cellWorldPos.y)
-                    DrawShadow(right, top, left, bottom);
-                if (player.transform.position.x >= cellWorldPos.x && player.transform.position.y <= cellWorldPos.y)
-                    DrawShadow(right, bottom, left, top);
+                    float left = (cellWorldPos.x - cameraLeft) / (cam.orthographicSize * 2 * cam.aspect);
+                    float right = (cellWorldPos.x + tilemapShadowCaster.cellSize.x - cameraLeft) / (cam.orthographicSize * 2 * cam.aspect);
+                    float bottom = (cellWorldPos.y - cameraBottom) / (cam.orthographicSize * 2);
+                    float top = (cellWorldPos.y + tilemapShadowCaster.cellSize.y - cameraBottom) / (cam.orthographicSize * 2);
+
+                    // Debug visual lines for the shadow bounds
+                    Debug.DrawLine(new Vector3(cellWorldPos.x, cellWorldPos.y, 0), new Vector3(cellWorldPos.x + tilemapShadowCaster.cellSize.x, cellWorldPos.y, 0), Color.red);
+                    Debug.DrawLine(new Vector3(cellWorldPos.x + tilemapShadowCaster.cellSize.x, cellWorldPos.y, 0), new Vector3(cellWorldPos.x + tilemapShadowCaster.cellSize.x, cellWorldPos.y + tilemapShadowCaster.cellSize.y, 0), Color.red);
+                    Debug.DrawLine(new Vector3(cellWorldPos.x + tilemapShadowCaster.cellSize.x, cellWorldPos.y + tilemapShadowCaster.cellSize.y, 0), new Vector3(cellWorldPos.x, cellWorldPos.y + tilemapShadowCaster.cellSize.y, 0), Color.red);
+                    Debug.DrawLine(new Vector3(cellWorldPos.x, cellWorldPos.y + tilemapShadowCaster.cellSize.y, 0), new Vector3(cellWorldPos.x, cellWorldPos.y, 0), Color.red);
+
+                    // Shadow rendering logic
+                    if (player.transform.position.x <= cellWorldPos.x && player.transform.position.y <= cellWorldPos.y)
+                        DrawShadow(left, bottom, right, top);
+                    if (player.transform.position.x <= cellWorldPos.x && player.transform.position.y >= cellWorldPos.y)
+                        DrawShadow(left, top, right, bottom);
+                    if (player.transform.position.x >= cellWorldPos.x && player.transform.position.y >= cellWorldPos.y)
+                        DrawShadow(right, top, left, bottom);
+                    if (player.transform.position.x >= cellWorldPos.x && player.transform.position.y <= cellWorldPos.y)
+                        DrawShadow(right, bottom, left, top);
+                }
             }
         }
 
@@ -118,6 +130,4 @@ public class ShadowCam : MonoBehaviour
 
         GL.End();
     }
-
-
 }

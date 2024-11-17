@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class SanityController : MonoBehaviour
 {    
@@ -8,6 +9,9 @@ public class SanityController : MonoBehaviour
     public float currentSanity;
 
     public SanityBar sanityBar;
+
+    public Tilemap secretRoomTilemap;
+
 
     void Start()
     {
@@ -20,6 +24,11 @@ public class SanityController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space)) 
         {
             TakeSanityDamage(10);
+        }
+
+        if (currentSanity <= 50) 
+        {
+            secretRoomTilemap.gameObject.SetActive(false);
         }
     }
 
