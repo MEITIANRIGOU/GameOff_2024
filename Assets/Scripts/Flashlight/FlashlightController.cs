@@ -33,6 +33,7 @@ public class FlashlightController : MonoBehaviour
             currentBatteryPower = Mathf.Max(currentBatteryPower, 0);
 
             isReducingSanity = false; 
+            flashlight.enabled = true;
         }
 
         if (currentBatteryPower <= 0 && !isReducingSanity)
@@ -53,6 +54,13 @@ public class FlashlightController : MonoBehaviour
             isReducingSanity = true;
             StartCoroutine(ReduceSanityOverTime());
         }
+    }
+
+    public void AddPower(float power)
+    {
+        currentBatteryPower += power;
+        currentBatteryPower = Mathf.Clamp(currentBatteryPower, 0, maxBatteryPower);
+        powerBar.SetPower(currentBatteryPower);
     }
 
     private IEnumerator ReduceSanityOverTime()
