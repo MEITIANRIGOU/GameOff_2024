@@ -7,13 +7,13 @@ public class SanityBar : MonoBehaviour
 {
     public Slider slider;
 
-    public void SetMaxSanity(int health)
+    public void SetMaxSanity(float health)
     {
         slider.maxValue = health;
         slider.value = health;
     }
 
-    public void SetSanity(int health)
+    public void SetSanity(float health)
     {
         slider.value = health;
     }
