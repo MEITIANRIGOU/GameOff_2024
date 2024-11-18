@@ -214,8 +214,8 @@ Transform:
   m_GameObject: {fileID: 212163037}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.0326119}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 5.1, y: -1.92, z: -0.0326119}
+  m_LocalScale: {x: 4.22, y: 3.02, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1262602985}
@@ -312,8 +312,8 @@ Transform:
   m_GameObject: {fileID: 596782247}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.0326119}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.12, y: 3.18, z: -0.0326119}
+  m_LocalScale: {x: 10.99, y: 2.79, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1262602985}
@@ -494,8 +494,8 @@ Transform:
   m_GameObject: {fileID: 1011492246}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.0326119}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -4.26, y: -2.49, z: -0.0326119}
+  m_LocalScale: {x: 8.28, y: 5.13, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1262602985}
@@ -538,10 +538,13 @@ MonoBehaviour:
     maxSpawn: 2
   spawnAreas:
   - spawnArea: {fileID: 596782248}
+    maxSpawn: 1
     objectsToSpawn: []
   - spawnArea: {fileID: 1011492247}
+    maxSpawn: 1
     objectsToSpawn: []
   - spawnArea: {fileID: 212163038}
+    maxSpawn: 1
     objectsToSpawn: []
   minSpawnBounds: 0.5
 --- !u!4 &1262602985
