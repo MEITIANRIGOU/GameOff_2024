@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Knife
   m_EditorClassIdentifier: Assembly-CSharp::Evidence/EvidenceItem
   evidenceName: Knife
-  evidenceDescription: Knify knife
+  evidenceDescription: Stabby Stabby
   evidenceIcon: {fileID: 21300000, guid: a3a715ca233e4e046b74c8ed1f13bb7f, type: 3}
