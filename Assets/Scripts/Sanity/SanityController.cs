@@ -21,9 +21,11 @@ public class SanityController : MonoBehaviour
 
     void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.Space)) 
         {
             TakeSanityDamage(10);
+            sanityBar.SetSanity(currentSanity);
         }
 
         if (currentSanity <= 50) 

@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Evidence;
+//using static Evidence;
 
 public class NotePickup : MonoBehaviour
 {
-
-    public EvidenceItem evidenceItem; 
+    [SerializeField]
+    private EvidenceItem evidenceItem; 
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

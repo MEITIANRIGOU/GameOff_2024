@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static Evidence;
+//using static Evidence;
 
 public class InventorySystem : MonoBehaviour
 {
@@ -18,6 +18,7 @@ public class InventorySystem : MonoBehaviour
 
     [SerializeField] Image selectedItemImage;
     [SerializeField] TextMeshProUGUI itemDesc;
+    [SerializeField] TextMeshProUGUI itemName;
 
 
     [SerializeField] private Transform gridParent; 
@@ -61,6 +62,7 @@ public class InventorySystem : MonoBehaviour
     {
         selectedItemImage.sprite = Resources.Load<Sprite>("Cigarette");
         itemDesc.text = "A cigarette. It's a bad habit, but it's the only thing that keeps you sane in this place.";
+        itemName.text = "Cigarette";
 
         if (!cigButton.activeSelf)
         {
@@ -89,6 +91,7 @@ public class InventorySystem : MonoBehaviour
     {
         selectedItemImage.sprite = Resources.Load<Sprite>("Battery");
         itemDesc.text = "A battery. It's a bit rusty, but it should still work.";
+        itemName.text = "Battery";
 
 
         if (cigButton.activeSelf)
@@ -115,6 +118,7 @@ public class InventorySystem : MonoBehaviour
     {
         selectedItemImage.sprite = Resources.Load<Sprite>("Key");
         itemDesc.text = "A key. Who knows what it unlocks.";
+        itemName.text = "Key";
 
         if (cigButton.activeSelf)
         {
@@ -143,7 +147,8 @@ public class InventorySystem : MonoBehaviour
 
     private void UpdateEvidenceDetails(EvidenceItem evidenceItem)
     {
-        itemDesc.text = $"{evidenceItem.evidenceName}\n{evidenceItem.evidenceDescription}";
+        itemName.text = $"{evidenceItem.evidenceName}";
+        itemDesc.text = $"{evidenceItem.evidenceDescription}";
         selectedItemImage.sprite = evidenceItem.evidenceIcon;
 
         if (cigButton.activeSelf)

@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 78a654bb3ac8140459a1fed9daee2591, type: 3}
   m_Name: Knife
-  m_EditorClassIdentifier: Assembly-CSharp::Evidence/EvidenceItem
+  m_EditorClassIdentifier: 
   evidenceName: Knife
-  evidenceDescription: Stabby Stabby
+  evidenceDescription: Knifey Knifey
   evidenceIcon: {fileID: 21300000, guid: a3a715ca233e4e046b74c8ed1f13bb7f, type: 3}
