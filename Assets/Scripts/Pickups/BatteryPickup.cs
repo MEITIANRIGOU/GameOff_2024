@@ -5,10 +5,12 @@ using UnityEngine;
 public class BatteryPickup : MonoBehaviour
 {
     FlashlightController flashlightController;
+    InventorySystem inventorySystem;
 
     private void Start()
     {
         flashlightController = GameObject.FindGameObjectWithTag("Player").GetComponent<FlashlightController>();
+        inventorySystem = GameObject.FindGameObjectWithTag("Player").GetComponent<InventorySystem>();
     }
 
 
@@ -16,7 +18,8 @@ public class BatteryPickup : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-           flashlightController.AddPower(100);
+           //flashlightController.AddPower(100);
+            inventorySystem.battAmount++;
             Destroy(gameObject);
         }
     }

@@ -17,7 +17,7 @@ public class Game : MonoBehaviour
 
     void Update()
     {
-        if (currentEnemyCount < spawnPoints.Length)
+        if (currentEnemyCount < spawnPoints.Length )
         {
             SpawnEnemy();
         }
