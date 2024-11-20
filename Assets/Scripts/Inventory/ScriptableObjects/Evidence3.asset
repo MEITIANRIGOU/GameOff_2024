@@ -9,9 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78a654bb3ac8140459a1fed9daee2591, type: 3}
+  m_Script: {fileID: 11500000, guid: c78e525714c2c45468b8169c7dcf4463, type: 3}
   m_Name: Evidence3
   m_EditorClassIdentifier: 
-  evidenceName: 
-  evidenceDescription: 
-  evidenceIcon: {fileID: 0}
+  itemName: Evidence3
+  itemDescription: ....
+  itemIcon: {fileID: 21300000, guid: e882e2f7a52d51d409713582fede61c9, type: 3}
+  rarity: 0
+  type: 0
+  amount: 0

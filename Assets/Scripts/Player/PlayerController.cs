@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 
     private Animator anim;
 
-    bool key_flashlight = false;
+   // bool key_flashlight = false;
 
    [SerializeField] SpriteRenderer flashlight;
 

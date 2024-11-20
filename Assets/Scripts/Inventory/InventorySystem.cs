@@ -3,36 +3,31 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-//using static Evidence;
 
 public class InventorySystem : MonoBehaviour
 {
     public GameObject inventory;
 
-    bool inventoryEnabled = false;
-
-    bool cigSelected = false, battSelected = false, keySelected = false;
+    private bool inventoryEnabled = false;
 
     public int battAmount, cigAmount, keyAmount;
-    [SerializeField] TextMeshProUGUI battText, cigText, keyText;
+    [SerializeField] private TextMeshProUGUI battText, cigText, keyText;
 
-    [SerializeField] Image selectedItemImage;
-    [SerializeField] TextMeshProUGUI itemDesc;
-    [SerializeField] TextMeshProUGUI itemName;
+    [SerializeField] private Image selectedItemImage;
+    [SerializeField] private TextMeshProUGUI itemDesc;
+    [SerializeField] private TextMeshProUGUI itemName;
 
-
-    [SerializeField] private Transform gridParent; 
+    [SerializeField] private Transform gridParent;
     [SerializeField] private GameObject buttonPrefab;
 
-    SanityController sanityController;
-    FlashlightController flashlightController;
+    private SanityController sanityController;
+    private FlashlightController flashlightController;
 
-    [SerializeField]GameObject cigButton,battButton;
+    [SerializeField] private GameObject cigButton, battButton;
 
     private void Start()
     {
         sanityController = GameObject.FindGameObjectWithTag("Player").GetComponent<SanityController>();
-
         flashlightController = GameObject.FindGameObjectWithTag("Player").GetComponent<FlashlightController>();
     }
 
@@ -41,67 +36,37 @@ public class InventorySystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             inventoryEnabled = !inventoryEnabled;
+            inventory.SetActive(inventoryEnabled);
         }
-
-        if (inventoryEnabled)
-        {
-            inventory.SetActive(true);
-        }
-        else
-        {
-            inventory.SetActive(false);
-        }
-
 
         battText.text = battAmount.ToString();
         cigText.text = cigAmount.ToString();
         keyText.text = keyAmount.ToString();
     }
 
-    public void SelectCig() 
+    public void SelectItem(PickupItem item)
     {
-        selectedItemImage.sprite = Resources.Load<Sprite>("Cigarette");
-        itemDesc.text = "A cigarette. It's a bad habit, but it's the only thing that keeps you sane in this place.";
-        itemName.text = "Cigarette";
-
-        if (!cigButton.activeSelf)
+        if (item == null)
         {
-            cigButton.SetActive(true);
+            Debug.LogError("Item is null");
+            return;
         }
 
-        if (battButton.activeSelf)
-        {
-            battButton.SetActive(false);
-        }
+        selectedItemImage.sprite = item.itemIcon;
+        itemDesc.text = item.itemDescription;
+        itemName.text = item.itemName;
 
 
+        cigButton.SetActive(item.type == PickupItem.PickupType.Cigarette);
+        battButton.SetActive(item.type == PickupItem.PickupType.Battery);
     }
 
-    public void SmokeCig()
+    public void UseCigarette()
     {
         if (cigAmount > 0)
         {
             cigAmount--;
             sanityController.AddSanity(10);
-        }
-        
-    }
-
-    public void SelectBattery()
-    {
-        selectedItemImage.sprite = Resources.Load<Sprite>("Battery");
-        itemDesc.text = "A battery. It's a bit rusty, but it should still work.";
-        itemName.text = "Battery";
-
-
-        if (cigButton.activeSelf)
-        {
-            cigButton.SetActive(false);
-        }
-
-        if (!battButton.activeSelf)
-        {
-            battButton.SetActive(true);
         }
     }
 
@@ -114,52 +79,29 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
-    public void SelectKey()
+    public void AddEvidence(PickupItem evidenceItem)
     {
-        selectedItemImage.sprite = Resources.Load<Sprite>("Key");
-        itemDesc.text = "A key. Who knows what it unlocks.";
-        itemName.text = "Key";
-
-        if (cigButton.activeSelf)
+        if (evidenceItem == null)
         {
-            cigButton.SetActive(false);
+            Debug.LogError("No evidence item provided!");
+            return;
         }
 
-        if (battButton.activeSelf)
-        {
-            battButton.SetActive(false);
-        }
-    }
-
-    public void AddEvidence(EvidenceItem evidenceItem)
-    {
         GameObject newButton = Instantiate(buttonPrefab, gridParent);
-
         Image buttonIcon = newButton.GetComponentInChildren<Image>();
         if (buttonIcon != null)
         {
-            buttonIcon.sprite = evidenceItem.evidenceIcon;
+            buttonIcon.sprite = evidenceItem.itemIcon;
         }
 
         Button button = newButton.GetComponent<Button>();
-        button.onClick.AddListener(() => UpdateEvidenceDetails(evidenceItem));
-    }
-
-    private void UpdateEvidenceDetails(EvidenceItem evidenceItem)
-    {
-        itemName.text = $"{evidenceItem.evidenceName}";
-        itemDesc.text = $"{evidenceItem.evidenceDescription}";
-        selectedItemImage.sprite = evidenceItem.evidenceIcon;
-
-        if (cigButton.activeSelf)
+        if (button != null)
         {
-            cigButton.SetActive(false);
-        }
-
-        if (battButton.activeSelf)
-        {
-            battButton.SetActive(false);
+            button.onClick.AddListener(() => SelectItem(evidenceItem));
         }
     }
-
 }
+
+   
+
+
