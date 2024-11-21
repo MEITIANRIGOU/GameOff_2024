@@ -71,3 +71,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 *.cs
+
+# Allow Pickup.cs and PickupItem.cs
+!Assets/Scripts/Inventory/Pickup.cs
+!Assets/Scripts/Inventory/PickupItem.cs
