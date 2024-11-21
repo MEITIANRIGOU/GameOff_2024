@@ -7,10 +7,12 @@ using UnityEngine.UI;
 public class InventorySystem : MonoBehaviour
 {
     public GameObject inventory;
-
     private bool inventoryEnabled = false;
 
-    public int battAmount, cigAmount, keyAmount;
+    [HideInInspector]public int battAmount, cigAmount, keyAmount;
+    public float cigHealAmount;
+    public float battPowerAmount;
+
     [SerializeField] private TextMeshProUGUI battText, cigText, keyText;
 
     [SerializeField] private Image selectedItemImage;
@@ -24,6 +26,7 @@ public class InventorySystem : MonoBehaviour
     private FlashlightController flashlightController;
 
     [SerializeField] private GameObject cigButton, battButton;
+
 
     private void Start()
     {
@@ -66,7 +69,7 @@ public class InventorySystem : MonoBehaviour
         if (cigAmount > 0)
         {
             cigAmount--;
-            sanityController.AddSanity(10);
+            sanityController.AddSanity(cigHealAmount);
         }
     }
 
@@ -75,7 +78,7 @@ public class InventorySystem : MonoBehaviour
         if (battAmount > 0)
         {
             battAmount--;
-            flashlightController.AddPower(100);
+            flashlightController.AddPower(battPowerAmount);
         }
     }
 

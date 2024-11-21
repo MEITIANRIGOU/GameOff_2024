@@ -9938,6 +9938,8 @@ MonoBehaviour:
   battAmount: 0
   cigAmount: 0
   keyAmount: 0
+  cigHealAmount: 20
+  battPowerAmount: 60
   battText: {fileID: 455037518}
   cigText: {fileID: 389072927}
   keyText: {fileID: 1591057313}
