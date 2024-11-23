@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e9ffe02a689834dba77de4433d7e1c, type: 3}
   m_Name: Evidence3
   m_EditorClassIdentifier: 
-  itemName: evidence3
+  itemName: Letter Opener
   itemDescription: 
   itemIcon: {fileID: 21300000, guid: e882e2f7a52d51d409713582fede61c9, type: 3}
   rarity: 0

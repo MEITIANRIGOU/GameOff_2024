@@ -12,23 +12,35 @@ public class PlayerController : MonoBehaviour
 
     private Animator anim;
 
-   // bool key_flashlight = false;
+    // bool key_flashlight = false;
 
-   [SerializeField] SpriteRenderer flashlight;
+    [SerializeField] SpriteRenderer flashlight;
 
- 
+    public GameObject goFlash;
+
+    // New boolean variables
+    public bool isCursorInTopRight;
+    public bool isCursorInBottomRight;
+    public bool isCursorInBottomLeft;
+    public bool isCursorInTopLeft;
+    public float currentAngle;
+    private float smoothedAngle; // New variable for smoothed angle
+    public float smoothingSpeed = 5f; // Smoothing speed for the angle
+
+    public Transform flashPosBL, flashPosTL, flashPosBR, flashPosTR;
+
     void Start()
     {
         if (!TryGetComponent(out rb_self))
         {
             Debug.LogWarning("Rigid Body 2D not found!");
         }
-
+/*
         if (!transform.GetChild(0).GetChild(1).TryGetComponent(out shooter))
         {
             Debug.LogWarning("Shooter not found!");
         }
-
+*/
         if (!TryGetComponent(out anim))
         {
             Debug.LogWarning("Animator not found!");
@@ -58,8 +70,13 @@ public class PlayerController : MonoBehaviour
         }
 
         Vector2 AttackVector = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, -Camera.main.transform.position.z)) - gameObject.transform.position;
-        transform.GetChild(0).rotation = Quaternion.Euler(0, 0, (float)Angle_360(AttackVector));
+        currentAngle = Angle_360(AttackVector); // Store the current angle
 
+        // Smooth out the angle
+        smoothedAngle = Mathf.LerpAngle(smoothedAngle, currentAngle, smoothingSpeed * Time.deltaTime);
+
+        transform.GetChild(0).rotation = Quaternion.Euler(0, 0, smoothedAngle);
+        /*
         if (Input.GetMouseButtonDown(0))
         {
             shooter.OnShoot();
@@ -70,14 +87,47 @@ public class PlayerController : MonoBehaviour
             transform.GetChild(1).rotation = transform.GetChild(0).rotation;
             anim.Play("MeleeAtk");
         }
-
-        /*
-        key_flashlight = Input.GetKeyDown(KeyCode.F);
-        if (key_flashlight)
-        {
-            flashlight.enabled = !flashlight.enabled;
-        }
         */
+
+        if (currentAngle >= 0 && currentAngle <= 90)
+        {
+            isCursorInTopLeft = true;
+            goFlash.transform.position = flashPosTL.position;
+        }
+        else
+        {
+            isCursorInTopLeft = false;
+        }
+
+        if (currentAngle >= 91 && currentAngle <= 180)
+        {
+            isCursorInBottomLeft = true;
+            goFlash.transform.position = flashPosBL.position;
+        }
+        else
+        {
+            isCursorInBottomLeft = false;
+        }
+
+        if (currentAngle <= -1 && currentAngle >= -90)
+        {
+            isCursorInTopRight = true;
+            goFlash.transform.position = flashPosTR.position;
+        }
+        else
+        {
+            isCursorInTopRight = false;
+        }
+
+        if (currentAngle <= -91 && currentAngle >= -180)
+        {
+            isCursorInBottomRight = true;
+            goFlash.transform.position = flashPosBR.position;
+        }
+        else
+        {
+            isCursorInBottomRight = false;
+        }
     }
 
     private void FixedUpdate()

@@ -9,7 +9,7 @@ public class FlashlightController : MonoBehaviour
 
     public float currentBatteryPower;
 
-    SpriteRenderer flashlight;
+   public GameObject flashlight;
     public PowerBar powerBar;
 
     SanityController sanityController;
@@ -18,7 +18,7 @@ public class FlashlightController : MonoBehaviour
     void Start()
     {
         currentBatteryPower = maxBatteryPower;
-        flashlight = GameObject.FindWithTag("Flashlight").GetComponent<SpriteRenderer>();
+       // flashlight = GameObject.FindWithTag("Flashlight");
         powerBar.SetMaxPower(maxBatteryPower);
         sanityController = GameObject.FindWithTag("Player").GetComponent<SanityController>();
     }
@@ -33,7 +33,7 @@ public class FlashlightController : MonoBehaviour
             currentBatteryPower = Mathf.Max(currentBatteryPower, 0);
 
             isReducingSanity = false; 
-            flashlight.enabled = true;
+        flashlight.SetActive(true);
         }
 
         if (currentBatteryPower <= 0 && !isReducingSanity)
@@ -46,7 +46,7 @@ public class FlashlightController : MonoBehaviour
     {
         if (flashlight != null)
         {
-            flashlight.enabled = false;
+            flashlight.SetActive(false);
         }
 
         if (!isReducingSanity)
