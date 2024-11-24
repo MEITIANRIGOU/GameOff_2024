@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject goFlash;
 
+
     // New boolean variables
     public bool isCursorInTopRight;
     public bool isCursorInBottomRight;
@@ -28,6 +29,8 @@ public class PlayerController : MonoBehaviour
     public float smoothingSpeed = 5f; // Smoothing speed for the angle
 
     public Transform flashPosBL, flashPosTL, flashPosBR, flashPosTR;
+
+    public bool canMove = true;
 
     void Start()
     {
@@ -49,85 +52,94 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        inputX = 0;
-        inputY = 0;
+        if (canMove)
+        {
+            inputX = 0;
+            inputY = 0;
 
-        if (Input.GetKey(KeyCode.W))
-        {
-            inputY += 1;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            inputY -= 1;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            inputX -= 1;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            inputX += 1;
-        }
+            if (Input.GetKey(KeyCode.W))
+            {
+                inputY += 1;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                inputY -= 1;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                inputX -= 1;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                inputX += 1;
+            }
 
-        Vector2 AttackVector = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, -Camera.main.transform.position.z)) - gameObject.transform.position;
-        currentAngle = Angle_360(AttackVector); // Store the current angle
+            Vector2 AttackVector = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, -Camera.main.transform.position.z)) - gameObject.transform.position;
+            currentAngle = Angle_360(AttackVector); // Store the current angle
 
-        // Smooth out the angle
-        smoothedAngle = Mathf.LerpAngle(smoothedAngle, currentAngle, smoothingSpeed * Time.deltaTime);
+            // Smooth out the angle
+            smoothedAngle = Mathf.LerpAngle(smoothedAngle, currentAngle, smoothingSpeed * Time.deltaTime);
 
-        transform.GetChild(0).rotation = Quaternion.Euler(0, 0, smoothedAngle);
-        /*
-        if (Input.GetMouseButtonDown(0))
-        {
-            shooter.OnShoot();
-        }
+            transform.GetChild(0).rotation = Quaternion.Euler(0, 0, smoothedAngle);
+            /*
+            if (Input.GetMouseButtonDown(0))
+            {
+                shooter.OnShoot();
+            }
 
-        if (Input.GetMouseButtonDown(1))
-        {
-            transform.GetChild(1).rotation = transform.GetChild(0).rotation;
-            anim.Play("MeleeAtk");
-        }
-        */
+            if (Input.GetMouseButtonDown(1))
+            {
+                transform.GetChild(1).rotation = transform.GetChild(0).rotation;
+                anim.Play("MeleeAtk");
+            }
+            */
 
-        if (currentAngle >= 0 && currentAngle <= 90)
-        {
-            isCursorInTopLeft = true;
-            goFlash.transform.position = flashPosTL.position;
+            if (currentAngle >= 0 && currentAngle <= 90)
+            {
+                isCursorInTopLeft = true;
+                goFlash.transform.position = flashPosTL.position;
+            }
+            else
+            {
+                isCursorInTopLeft = false;
+            }
+
+            if (currentAngle >= 91 && currentAngle <= 180)
+            {
+                isCursorInBottomLeft = true;
+                goFlash.transform.position = flashPosBL.position;
+            }
+            else
+            {
+                isCursorInBottomLeft = false;
+            }
+
+            if (currentAngle <= -1 && currentAngle >= -90)
+            {
+                isCursorInTopRight = true;
+                goFlash.transform.position = flashPosTR.position;
+            }
+            else
+            {
+                isCursorInTopRight = false;
+            }
+
+            if (currentAngle <= -91 && currentAngle >= -180)
+            {
+                isCursorInBottomRight = true;
+                goFlash.transform.position = flashPosBR.position;
+            }
+            else
+            {
+                isCursorInBottomRight = false;
+            }
         }
         else
         {
-            isCursorInTopLeft = false;
+            inputX = 0;
+            inputY = 0;
         }
 
-        if (currentAngle >= 91 && currentAngle <= 180)
-        {
-            isCursorInBottomLeft = true;
-            goFlash.transform.position = flashPosBL.position;
-        }
-        else
-        {
-            isCursorInBottomLeft = false;
-        }
-
-        if (currentAngle <= -1 && currentAngle >= -90)
-        {
-            isCursorInTopRight = true;
-            goFlash.transform.position = flashPosTR.position;
-        }
-        else
-        {
-            isCursorInTopRight = false;
-        }
-
-        if (currentAngle <= -91 && currentAngle >= -180)
-        {
-            isCursorInBottomRight = true;
-            goFlash.transform.position = flashPosBR.position;
-        }
-        else
-        {
-            isCursorInBottomRight = false;
-        }
     }
 
     private void FixedUpdate()

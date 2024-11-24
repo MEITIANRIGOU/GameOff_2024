@@ -34,16 +34,44 @@ public class Chest : MonoBehaviour
     public GameObject chestItem;
     public Transform chestItemSpawnPoint;
 
+    public Dialogue.Dialogue dlg;
+    int npcIndex = 1;
+    GenericNPC npc;
+    public bool isTalking, canContinue;
+    public GameObject loaderUI;
+    public bool searched = false;
+
     private void Start()
     {
         chestItemSpawnPoint = chestItem.transform;
+        npc = gameObject.GetComponent<GenericNPC>();
+        dlg = gameObject.GetComponent<Dialogue.Dialogue>();
+     
     }
     // Update is called once per frame
     private void Update()
     {
         if (!isPlayerInRange) return;
 
-        HandleChestInputs();
+       
+        isTalking = dlg.isTalking;
+        canContinue = dlg.canContinue;
+
+
+        if (Input.GetKeyDown(searchKey) && !isTalking && searched)
+        {
+            dlg.StartDialogue(npcIndex);
+
+
+        }
+
+        if (Input.GetKeyDown(searchKey) && canContinue)
+            {
+                dlg.NextSentence();
+            }
+
+
+            HandleChestInputs();
     }
 
     // Handles the inputs for searching the chest
@@ -118,7 +146,7 @@ public class Chest : MonoBehaviour
         isSearchSuccessfull = true;
         currentSearchProgress = 100.0f;
         //TODO: Remove this
-       // GetComponent<SpriteRenderer>().color = Color.red;
+        // GetComponent<SpriteRenderer>().color = Color.red;
         Debug.Log("Chest Opened");
 
         SpawChestItems();
@@ -127,45 +155,48 @@ public class Chest : MonoBehaviour
     // Spawns the items in the chest based on their probabilities
     private void SpawChestItems()
     {
-        if (chestItems.Count == 0)
+        if (chestItems.Count == 0 || searched == true)
         {
             Debug.Log("No items in the chest");
+            StartConversation();
         }
-        else
+        else if (chestItems.Count >= 1)
         {
+            npcIndex = 2;
             foreach (ChestItems item in chestItems)
             {
-                /*
-                 *
-                float random = UnityEngine.Random.Range(0f, 1f);
-                if (item.probability <= random)
-                {
-                    Debug.Log(item.item.name + " " + "spawned");
-                }
-                */
-
                 Instantiate(item.item, chestItemSpawnPoint.position, Quaternion.identity);
+            }
+            StartConversation();
+        }
+        loaderUI.SetActive(false);
+
+        searched = true;
+    }
 
 
+        public void StartConversation()
+        {
+            dlg.StartDialogue(npcIndex);
+        }
+
+        // Handles the trigger enter event
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.tag == "Player")
+            {
+                isPlayerInRange = true;
             }
         }
-    }
 
-    // Handles the trigger enter event
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.tag == "Player")
+        // Handles the trigger exit event
+        private void OnTriggerExit2D(Collider2D other)
         {
-            isPlayerInRange = true;
+            if (other.tag == "Player")
+            {
+                isPlayerInRange = false;
+            }
         }
-    }
-
-    // Handles the trigger exit event
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.tag == "Player")
-        {
-            isPlayerInRange = false;
-        }
-    }
+    
 }
+
