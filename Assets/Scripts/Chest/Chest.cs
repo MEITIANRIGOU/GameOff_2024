@@ -40,13 +40,14 @@ public class Chest : MonoBehaviour
     public bool isTalking, canContinue;
     public GameObject loaderUI;
     public bool searched = false;
-
+    PlayerController player;
     private void Start()
     {
         chestItemSpawnPoint = chestItem.transform;
         npc = gameObject.GetComponent<GenericNPC>();
         dlg = gameObject.GetComponent<Dialogue.Dialogue>();
-     
+        player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+
     }
     // Update is called once per frame
     private void Update()
@@ -100,15 +101,17 @@ public class Chest : MonoBehaviour
     {
         while (isSearchButtonPressed || Time.time - searchButtonReleaseTime <= buttonHoldThreshold && !isSearchSuccessfull)
         {
+            player.canMove = false;
             currentSearchProgress += CalculateSearchProgress();
             radialLoaderUI.fillAmount = currentSearchProgress / 100.0f;
             if (currentSearchProgress >= 100)
             {
                 OpenChest();
-
+                
                 yield break;
             }
             yield return null;
+            player.canMove = true;
         }
 
         searchCoroutine = null;
@@ -121,6 +124,7 @@ public class Chest : MonoBehaviour
             if (currentSearchProgress <= 0)
                 currentSearchProgress = 0;
             radialLoaderUI.fillAmount = currentSearchProgress / 100.0f;
+
             yield return null;
         }
     }

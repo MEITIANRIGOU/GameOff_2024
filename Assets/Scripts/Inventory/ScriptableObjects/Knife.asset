@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e9ffe02a689834dba77de4433d7e1c, type: 3}
   m_Name: Knife
   m_EditorClassIdentifier: 
-  itemName: Knife
-  itemDescription: Stab
+  itemName: Bloodied Knife
+  itemDescription: /
   itemIcon: {fileID: 21300000, guid: a3a715ca233e4e046b74c8ed1f13bb7f, type: 3}
   rarity: 0
   type: 0
