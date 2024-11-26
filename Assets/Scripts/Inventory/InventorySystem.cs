@@ -26,6 +26,7 @@ public class InventorySystem : MonoBehaviour
     private FlashlightController flashlightController;
 
     [SerializeField] private GameObject cigButton, battButton;
+    public bool knifeObt, keyObt, evidenceObt;
 
 
     private void Start()
