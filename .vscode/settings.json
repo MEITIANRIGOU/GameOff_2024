@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "GameOff_2024.sln"
+    "dotnet.defaultSolution": "GameOff_2024.sln",
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
 }
