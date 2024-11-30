@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     private Shooter shooter;
 
-    private Animator anim;
+
 
     // bool key_flashlight = false;
 
@@ -32,22 +32,26 @@ public class PlayerController : MonoBehaviour
 
     public bool canMove = true;
 
+    private Animator anim;
+private Vector2 lastDirection;
+
+private bool idle;
     void Start()
     {
         if (!TryGetComponent(out rb_self))
         {
             Debug.LogWarning("Rigid Body 2D not found!");
         }
-/*
+
         if (!transform.GetChild(0).GetChild(1).TryGetComponent(out shooter))
         {
             Debug.LogWarning("Shooter not found!");
         }
-*/
-        if (!TryGetComponent(out anim))
-        {
-            Debug.LogWarning("Animator not found!");
-        }
+
+
+        anim = GetComponent<Animator>();
+        
+        
     }
 
     void Update()
@@ -81,7 +85,7 @@ public class PlayerController : MonoBehaviour
             smoothedAngle = Mathf.LerpAngle(smoothedAngle, currentAngle, smoothingSpeed * Time.deltaTime);
 
             transform.GetChild(0).rotation = Quaternion.Euler(0, 0, smoothedAngle);
-            /*
+            
             if (Input.GetMouseButtonDown(0))
             {
                 shooter.OnShoot();
@@ -92,7 +96,7 @@ public class PlayerController : MonoBehaviour
                 transform.GetChild(1).rotation = transform.GetChild(0).rotation;
                 anim.Play("MeleeAtk");
             }
-            */
+            
 
             if (currentAngle >= 0 && currentAngle <= 90)
             {
@@ -139,7 +143,22 @@ public class PlayerController : MonoBehaviour
             inputX = 0;
             inputY = 0;
         }
-
+        idle = (inputX == 0 && inputY == 0);
+        anim.SetFloat("xInput", inputX);
+        anim.SetFloat("yInput", inputY);
+        anim.SetBool("Idle", idle);
+        
+        if (inputX != 0 || inputY != 0)
+        {
+            lastDirection = new Vector2(inputX, inputY); 
+        }
+        
+        anim.SetFloat("xInput", inputX);
+        anim.SetFloat("yInput", inputY);
+        anim.SetFloat("lastXInput", lastDirection.x); 
+        anim.SetFloat("lastYInput", lastDirection.y); 
+        anim.SetBool("Idle", idle);
+        
     }
 
     private void FixedUpdate()
