@@ -1,15 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : Entity
 {
+    [SerializeField] SpriteRenderer sr;
     public int initHealth = 10;
     public float moveSpeed = 1f;
 
     private Transform player;
     private Rigidbody2D rb;
-
+    private bool IsFlipped = false;
     void Start()
     {
         Health = initHealth;
@@ -29,7 +31,19 @@ public class Enemy : Entity
 
     }
 
-
+    private void Update()
+    {
+        if (!IsFlipped && Math.Sign(rb.velocity.x) == -1)
+        {
+            sr.flipX = false;
+            IsFlipped = true;
+        }
+        else if (IsFlipped && Math.Sign(rb.velocity.x) == 1)
+        {
+            sr.flipX = true;
+            IsFlipped = false;
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
