@@ -503,7 +503,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 86535172}
-  - component: {fileID: 86535171}
+  - component: {fileID: 86535173}
   m_Layer: 0
   m_Name: MenuHandler
   m_TagString: Untagged
@@ -511,21 +511,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &86535171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 86535170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7277423d24a7b854c955c3a7dc4b3adb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainMenu: {fileID: 1451250231}
-  creditsScreen: {fileID: 277767256}
-  gameSceneName: Layout lvl 1
 --- !u!4 &86535172
 Transform:
   m_ObjectHideFlags: 0
@@ -543,6 +528,21 @@ Transform:
   - {fileID: 277767257}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &86535173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86535170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa09e4a63545fcb44a74fc0c01a26d00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMenu: {fileID: 1451250231}
+  creditsScreen: {fileID: 277767256}
+  gameSceneName: Layout lvl 1
 --- !u!1 &87307618
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,7 +626,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 86535171}
+      - m_Target: {fileID: 86535173}
         m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
         m_MethodName: OnClickPlayButton
         m_Mode: 1
@@ -827,7 +827,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 86535171}
+      - m_Target: {fileID: 86535173}
         m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
         m_MethodName: OnClickQuitButton
         m_Mode: 1
@@ -2608,7 +2608,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 86535171}
+      - m_Target: {fileID: 86535173}
         m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
         m_MethodName: OnClickCreditsButton
         m_Mode: 1
@@ -2982,7 +2982,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 86535171}
+      - m_Target: {fileID: 86535173}
         m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
         m_MethodName: OnClickExitCreditsButton
         m_Mode: 1

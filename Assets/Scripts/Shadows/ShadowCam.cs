@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 public class ShadowCam : MonoBehaviour
 {
     public List<Tilemap> tilemapShadowCasters;
-  
+
     public Tilemap secretRoomTilemap;
 
     float camHeight, camWidth;
@@ -51,46 +51,46 @@ public class ShadowCam : MonoBehaviour
         GLdraw.SetPass(0);
         GL.LoadOrtho();
 
-        foreach (Tilemap tilemapShadowCaster in tilemapShadowCasters)
-        {
+        // foreach (Tilemap tilemapShadowCaster in tilemapShadowCasters)
+        // {
 
-            // Skip rendering if secretRoomTilemap is inactive
-            if (tilemapShadowCaster == secretRoomTilemap && !secretRoomTilemap.gameObject.activeSelf)
-            {
-                continue; 
-            }
+        //     // Skip rendering if secretRoomTilemap is inactive
+        //     if (tilemapShadowCaster == secretRoomTilemap && !secretRoomTilemap.gameObject.activeSelf)
+        //     {
+        //         continue; 
+        //     }
 
-            BoundsInt bounds = tilemapShadowCaster.cellBounds;
+        //     BoundsInt bounds = tilemapShadowCaster.cellBounds;
 
-            foreach (Vector3Int pos in bounds.allPositionsWithin)
-            {
-                if (tilemapShadowCaster.HasTile(pos))
-                {
-                    Vector3 cellWorldPos = tilemapShadowCaster.CellToWorld(pos);
+        //     foreach (Vector3Int pos in bounds.allPositionsWithin)
+        //     {
+        //         if (tilemapShadowCaster.HasTile(pos))
+        //         {
+        //             Vector3 cellWorldPos = tilemapShadowCaster.CellToWorld(pos);
 
-                    float left = (cellWorldPos.x - cameraLeft) / (cam.orthographicSize * 2 * cam.aspect);
-                    float right = (cellWorldPos.x + tilemapShadowCaster.cellSize.x - cameraLeft) / (cam.orthographicSize * 2 * cam.aspect);
-                    float bottom = (cellWorldPos.y - cameraBottom) / (cam.orthographicSize * 2);
-                    float top = (cellWorldPos.y + tilemapShadowCaster.cellSize.y - cameraBottom) / (cam.orthographicSize * 2);
+        //             float left = (cellWorldPos.x - cameraLeft) / (cam.orthographicSize * 2 * cam.aspect);
+        //             float right = (cellWorldPos.x + tilemapShadowCaster.cellSize.x - cameraLeft) / (cam.orthographicSize * 2 * cam.aspect);
+        //             float bottom = (cellWorldPos.y - cameraBottom) / (cam.orthographicSize * 2);
+        //             float top = (cellWorldPos.y + tilemapShadowCaster.cellSize.y - cameraBottom) / (cam.orthographicSize * 2);
 
-                    // Debug visual lines for the shadow bounds
-                    Debug.DrawLine(new Vector3(cellWorldPos.x, cellWorldPos.y, 0), new Vector3(cellWorldPos.x + tilemapShadowCaster.cellSize.x, cellWorldPos.y, 0), Color.red);
-                    Debug.DrawLine(new Vector3(cellWorldPos.x + tilemapShadowCaster.cellSize.x, cellWorldPos.y, 0), new Vector3(cellWorldPos.x + tilemapShadowCaster.cellSize.x, cellWorldPos.y + tilemapShadowCaster.cellSize.y, 0), Color.red);
-                    Debug.DrawLine(new Vector3(cellWorldPos.x + tilemapShadowCaster.cellSize.x, cellWorldPos.y + tilemapShadowCaster.cellSize.y, 0), new Vector3(cellWorldPos.x, cellWorldPos.y + tilemapShadowCaster.cellSize.y, 0), Color.red);
-                    Debug.DrawLine(new Vector3(cellWorldPos.x, cellWorldPos.y + tilemapShadowCaster.cellSize.y, 0), new Vector3(cellWorldPos.x, cellWorldPos.y, 0), Color.red);
+        //             // Debug visual lines for the shadow bounds
+        //             Debug.DrawLine(new Vector3(cellWorldPos.x, cellWorldPos.y, 0), new Vector3(cellWorldPos.x + tilemapShadowCaster.cellSize.x, cellWorldPos.y, 0), Color.red);
+        //             Debug.DrawLine(new Vector3(cellWorldPos.x + tilemapShadowCaster.cellSize.x, cellWorldPos.y, 0), new Vector3(cellWorldPos.x + tilemapShadowCaster.cellSize.x, cellWorldPos.y + tilemapShadowCaster.cellSize.y, 0), Color.red);
+        //             Debug.DrawLine(new Vector3(cellWorldPos.x + tilemapShadowCaster.cellSize.x, cellWorldPos.y + tilemapShadowCaster.cellSize.y, 0), new Vector3(cellWorldPos.x, cellWorldPos.y + tilemapShadowCaster.cellSize.y, 0), Color.red);
+        //             Debug.DrawLine(new Vector3(cellWorldPos.x, cellWorldPos.y + tilemapShadowCaster.cellSize.y, 0), new Vector3(cellWorldPos.x, cellWorldPos.y, 0), Color.red);
 
-                    // Shadow rendering logic
-                    if (player.transform.position.x <= cellWorldPos.x && player.transform.position.y <= cellWorldPos.y)
-                        DrawShadow(left, bottom, right, top);
-                    if (player.transform.position.x <= cellWorldPos.x && player.transform.position.y >= cellWorldPos.y)
-                        DrawShadow(left, top, right, bottom);
-                    if (player.transform.position.x >= cellWorldPos.x && player.transform.position.y >= cellWorldPos.y)
-                        DrawShadow(right, top, left, bottom);
-                    if (player.transform.position.x >= cellWorldPos.x && player.transform.position.y <= cellWorldPos.y)
-                        DrawShadow(right, bottom, left, top);
-                }
-            }
-        }
+        //             // Shadow rendering logic
+        //             if (player.transform.position.x <= cellWorldPos.x && player.transform.position.y <= cellWorldPos.y)
+        //                 DrawShadow(left, bottom, right, top);
+        //             if (player.transform.position.x <= cellWorldPos.x && player.transform.position.y >= cellWorldPos.y)
+        //                 DrawShadow(left, top, right, bottom);
+        //             if (player.transform.position.x >= cellWorldPos.x && player.transform.position.y >= cellWorldPos.y)
+        //                 DrawShadow(right, top, left, bottom);
+        //             if (player.transform.position.x >= cellWorldPos.x && player.transform.position.y <= cellWorldPos.y)
+        //                 DrawShadow(right, bottom, left, top);
+        //         }
+        //     }
+        // }
 
         GL.PopMatrix();
     }
