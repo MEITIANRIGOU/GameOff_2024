@@ -29,7 +29,7 @@ public class Enemy : Entity
 
     }
 
-    
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -37,9 +37,6 @@ public class Enemy : Entity
         {
             TakeDamage(5, collision.transform.position);
         }
-
-
-      
     }
 
     private void OnEnable()
@@ -65,8 +62,13 @@ public class Enemy : Entity
     {
         Health -= dmg;
         if (Health <= 0)
-        { 
+        {
             Destroy(this.gameObject);
         }
+    }
+
+    public void RunAway()
+    {
+        Destroy(this.gameObject);
     }
 }
