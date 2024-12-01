@@ -542,7 +542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenu: {fileID: 1451250231}
   creditsScreen: {fileID: 277767256}
-  gameSceneName: Layout lvl 1
+  gameSceneName: MainScene
 --- !u!1 &87307618
 GameObject:
   m_ObjectHideFlags: 0
