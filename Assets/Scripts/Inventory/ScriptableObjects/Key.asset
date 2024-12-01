@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 28e9ffe02a689834dba77de4433d7e1c, type: 3}
-  m_Name: Recorder
+  m_Name: Key
   m_EditorClassIdentifier: 
-  itemName: Recorder
-  itemDescription: "A recorder? The tape\u2019s worn, but maybe it still holds a
-    voice... something I\u2019ve missed"
-  itemIcon: {fileID: 21300000, guid: 17a3ddce2849346449d34806a81b43a7, type: 3}
+  itemName: Key
+  itemDescription: A key? I wonder what it unlocks.
+  itemIcon: {fileID: 21300000, guid: d3b200a9f843fdd428842049924f017e, type: 3}
   rarity: 0
   type: 0
   amount: 0
