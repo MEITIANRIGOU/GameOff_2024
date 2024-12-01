@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Knife
   m_EditorClassIdentifier: 
   itemName: Bloodied Knife
-  itemDescription: /
-  itemIcon: {fileID: 21300000, guid: a3a715ca233e4e046b74c8ed1f13bb7f, type: 3}
+  itemDescription: "A blood-stained knife... the blade\u2019s still sharp. This must
+    be the weapon"
+  itemIcon: {fileID: 2075863624, guid: 66ef25daf635e89458fcc0bb4f6aff63, type: 3}
   rarity: 0
   type: 0
   amount: 0
