@@ -75,3 +75,5 @@ crashlytics-build.properties
 # Allow Pickup.cs and PickupItem.cs
 !Assets/Scripts/Inventory/Pickup.cs
 !Assets/Scripts/Inventory/PickupItem.cs
+!Assets/Scripts/Menu/MainMenuManager.cs
+!Assets/Scripts/FlashLightBehaviour.cs
