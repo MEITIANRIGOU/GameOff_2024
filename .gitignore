@@ -77,3 +77,4 @@ crashlytics-build.properties
 !Assets/Scripts/Inventory/PickupItem.cs
 !Assets/Scripts/Menu/MainMenuManager.cs
 !Assets/Scripts/FlashLightBehaviour.cs
+!Assets/Scripts/GameEndTrigger.cs
