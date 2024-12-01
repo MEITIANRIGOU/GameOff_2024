@@ -47,7 +47,7 @@ public class SanityController : MonoBehaviour
         currentSanity = Mathf.Clamp(currentSanity, 0, maxSanity);
         sanityBar.SetSanity(currentSanity);
     }
-
+    
     public void ReduceSanityOverTime(float damagePerSecond)
     {
         float damage = damagePerSecond;
@@ -56,6 +56,8 @@ public class SanityController : MonoBehaviour
         sanityBar.SetSanity(currentSanity);
        
     }
+    
+
 }
 
 
