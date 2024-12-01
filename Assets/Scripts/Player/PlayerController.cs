@@ -97,7 +97,7 @@ private bool idle;
                 anim.Play("MeleeAtk");
             }
             
-
+/*
             if (currentAngle >= 0 && currentAngle <= 90)
             {
                 isCursorInTopLeft = true;
@@ -137,6 +137,7 @@ private bool idle;
             {
                 isCursorInBottomRight = false;
             }
+*/
         }
         else
         {

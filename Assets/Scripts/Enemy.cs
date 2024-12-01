@@ -26,6 +26,17 @@ public class Enemy : Entity
         {
             Debug.LogError("no rb");
         }
+
+    }
+
+    
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Bullet"))
+        {
+            TakeDamage(5, collision.transform.position);
+        }
     }
 
     private void OnEnable()
