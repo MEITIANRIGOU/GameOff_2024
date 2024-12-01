@@ -56,7 +56,17 @@ public class SanityController : MonoBehaviour
         sanityBar.SetSanity(currentSanity);
        
     }
-    
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            TakeSanityDamage(10);
+            sanityBar.SetSanity(currentSanity);
+            Destroy(collision.gameObject);
+        }
+    }
+
 
 }
 

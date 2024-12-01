@@ -37,6 +37,9 @@ public class Enemy : Entity
         {
             TakeDamage(5, collision.transform.position);
         }
+
+
+      
     }
 
     private void OnEnable()

@@ -21,13 +21,13 @@ public class Pickup : MonoBehaviour
                     inventory.AddEvidence(pickupItem);
                     break;
                 case PickupItem.PickupType.Battery:
-                   // inventory.battAmount += pickupItem.amount;
+                    inventory.battAmount += pickupItem.amount;
                     break;
                 case PickupItem.PickupType.Cigarette:
-                   // inventory.cigAmount += pickupItem.amount;
+                    inventory.cigAmount += pickupItem.amount;
                     break;
                 case PickupItem.PickupType.Key:
-                   // inventory.keyAmount += pickupItem.amount;
+                    inventory.keyAmount += pickupItem.amount;
                     break;
             }
 

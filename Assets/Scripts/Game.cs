@@ -10,6 +10,8 @@ public class Game : MonoBehaviour
 
     private EnemySpawnPoint[] spawnPoints;
 
+
+
     void Start()
     {
         spawnPoints = FindObjectsOfType<EnemySpawnPoint>();
@@ -21,6 +23,8 @@ public class Game : MonoBehaviour
         {
             SpawnEnemy();
         }
+
+
     }
 
     void SpawnEnemy()
