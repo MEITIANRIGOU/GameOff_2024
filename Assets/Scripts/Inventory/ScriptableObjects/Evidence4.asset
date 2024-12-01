@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e9ffe02a689834dba77de4433d7e1c, type: 3}
   m_Name: Evidence4
   m_EditorClassIdentifier: 
-  itemName: "A Child\u2019s Toy "
-  itemDescription: "I\u2019ve seen it before. It doesn\u2019t belong here. Why does
-    it feel so... personal?"
-  itemIcon: {fileID: 21300000, guid: c350c24c1ad0841418641afc1b193ac7, type: 3}
+  itemName: evidence 4
+  itemDescription: .......
+  itemIcon: {fileID: 1876078639, guid: a6862e0d4e396e2408884ba00f449258, type: 3}
   rarity: 0
   type: 0
   amount: 0

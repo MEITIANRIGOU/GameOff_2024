@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Cigarette
   itemDescription: A cigarette. It's a bad habit, but it's the only thing that keeps
     you sane in this place.
-  itemIcon: {fileID: 239842043, guid: 66ef25daf635e89458fcc0bb4f6aff63, type: 3}
+  itemIcon: {fileID: 21300000, guid: f866a60d70d29934ab5819bbbf5b3673, type: 3}
   rarity: 0
   type: 2
   amount: 1
